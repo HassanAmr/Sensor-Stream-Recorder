@@ -21,7 +21,6 @@ using namespace cv;
 void Help();
 int CreateDirectories(String, String, String);//this function will create the necessary folders for the recorder
 
-void PlotUpdater();
 void SensorStream();
 void Timer();
 
@@ -146,21 +145,24 @@ int main(int argc, const char * argv[]){
   bool writingSRT = false;
   int srtLineCounter = 1;
   String srtData = "";
+  VideoWriter * video;
   
   for(;;){
-
+  
+  	
+      
     if (startedRecording)
     {
       //TODO: make the files naming also suitable for windows
-      String vidFileName =      "Videos/" + recorderName + "/" + sessionName + "/" + std::to_string(recordingsCounter) + ".avi";
-      String srtFileName =      "Videos/" + recorderName + "/" + sessionName + "/" + std::to_string(recordingsCounter) + ".srt";
-      String audioFileName =      "Videos/" + recorderName + "/" + sessionName + "/" + std::to_string(recordingsCounter) + ".wav";
+      String vidFileName =      folderName + recorderName + "/" + sessionName + "/" + std::to_string(recordingsCounter) + ".avi";
+      String srtFileName =      folderName + recorderName + "/" + sessionName + "/" + std::to_string(recordingsCounter) + ".srt";
+      String audioFileName =      folderName + recorderName + "/" + sessionName + "/" + std::to_string(recordingsCounter) + ".wav";
       //String trainingFileName = "Output/" + recorderName + "/" + sessionName + "/Training/" + std::to_string(recordingsCounter);//TODO: Delete later
       srtFile = fopen (srtFileName.c_str(),"w");
       //trainingFile = fopen (trainingFileName.c_str()  ,"w");
       WriteWavHeader(audioFileName.c_str(), samplingFrequency, sensorVectorSize);
-      
-      VideoWriter * video = new VideoWriter(vidFileName,CV_FOURCC('M','J','P','G'),fps, Size(frame_width,frame_height),true);
+      VideoWriter * video = new VideoWriter(vidFileName,CV_FOURCC('M','J','P','G'),fps, Size(frame_width,frame_height),true);  
+
       
       startedRecording = false;
     }
@@ -321,12 +323,6 @@ void SensorStream()
       {
         val = stof(buffer);
         
-        if (plot)//will only plot if the user entered the argument to plot while recording. This saves a lot of resources. And avoids the potentional data races
-        {
-          lastReceivedVal = val;
-          thread pu (PlotUpdater);
-          pu.detach();
-        }
         if(recording)
         {
           if (startWriting)

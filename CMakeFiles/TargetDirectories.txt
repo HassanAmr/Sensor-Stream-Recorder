@@ -1,1 +1,0 @@
-/Users/Hassan/Documents/Uni Freiburg/Courses/Embedded Systems Praktikum/OpenCV/Recorder/CMakeFiles/Recorder.dir
