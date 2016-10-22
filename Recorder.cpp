@@ -468,11 +468,12 @@ void Help()
 
 int CreateDirectories(String recorderName, String sessionName)//TODO: make it also suitable for windows
 {
+  String folderName = "~/Workspace/Recorder/Videos/";
   int returnValue = 0;
-  int status = mkdir("Videos", 0777);
+  int status = mkdir(folderName.c_str(), 0777);
   if ( status == 0)
   {
-    printf("Folder created 'Output'\n");
+    printf("Folder created 'Videos' in the following location:\n~/Workspace/Recorder/\n");
   }
   else if (errno == EEXIST)
   {
@@ -484,7 +485,7 @@ int CreateDirectories(String recorderName, String sessionName)//TODO: make it al
     returnValue = 1;
   }
 
-  String directoryName = "Videos/" + recorderName;
+  String directoryName = folderName + recorderName;
 
   status = mkdir(directoryName.c_str(), 0777);
   if ( status == 0)
