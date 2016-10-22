@@ -1,6 +1,6 @@
-#include <iostream> // for standard I/O
+//#include <iostream> // for standard I/O
 //#include <sstream>      // std::stringstream, std::stringbuf
-#include <string>   // for strings
+//#include <string>   // for strings
 #include <time.h>
 #include <thread>
 #include <fstream>
@@ -13,21 +13,21 @@
 
 //#include <opencv2/core/core.hpp>        // Basic OpenCV structures (cv::Mat)
 //#include <opencv2/highgui/highgui.hpp>  // Video write
-
-
 #include "opencv2/opencv.hpp"
-//#include <iostream>
 
 using namespace std;
 using namespace cv;
 
 void Help();
+int CreateDirectories(String, String, String);//this function will create the necessary folders for the recorder
+
 void PlotUpdater();
 void SensorStream();
 void Timer();
+
 void WriteSRT(int lineCounter, String data);
 String FromMillisecondsToSRTFormat(unsigned long val);
-int CreateDirectories(String, String);//this function will create the necessary folders for the recorder
+
 void WriteLittleEndian(unsigned int word, int num_bytes);
 void WriteWavHeader(const char * filename, int s_rate, int no_input);
 unsigned int FloatToBits(float x);
@@ -96,7 +96,9 @@ int main(int argc, const char * argv[]){
 
   String sessionName = String(buffer);
   
-  int status = CreateDirectories(recorderName, sessionName);
+  String folderName = "~/Workspace/Recorder/Videos/";
+  
+  int status = CreateDirectories(folderName, recorderName, sessionName);
 
   if (status == 1)
   {
@@ -466,9 +468,8 @@ void Help()
             << endl;
 }
 
-int CreateDirectories(String recorderName, String sessionName)//TODO: make it also suitable for windows
+int CreateDirectories(String folderName, String recorderName, String sessionName)//TODO: make it also suitable for windows
 {
-  String folderName = "~/Workspace/Recorder/Videos/";
   int returnValue = 0;
   int status = mkdir(folderName.c_str(), 0777);
   if ( status == 0)
@@ -501,7 +502,6 @@ int CreateDirectories(String recorderName, String sessionName)//TODO: make it al
     printf("Couldn't create folder for the recorder\n");
     returnValue = 1;
   }
-
   
   directoryName = directoryName + "/" + sessionName;
 
@@ -520,36 +520,6 @@ int CreateDirectories(String recorderName, String sessionName)//TODO: make it al
     returnValue = 1;
   }
 
-
-  //status = mkdir(String(directoryName + "/Video").c_str(), 0777);
-  //if ( status == 0)
-  //{
-    //printf("");//Not important to mention it again, since we already told the user that a new folder for the recorder has been created.
-  //}
-  //else if (errno == EEXIST)
-  //{
-    //printf("");//Here we don't print anything, because it is going to be distrubing whenever we get notfied about the Output folder being already there.
-  //}
-  //else
-  //{
-  //  printf("Couldn't create the 'Video' folder for the recorder\n");
-  //  returnValue =  1;
-  //}
-
-  //status = mkdir(String(directoryName + "/Training").c_str(), 0777);
-  //if (status == 0)
-  //{
-    //printf("");//Not important to mention it again, since we already told the user that a new folder for the recorder has been created.
-  //}
-  //else if (errno == EEXIST)
-  //{
-    //printf("");//Here we don't print anything, because it is going to be distrubing whenever we get notfied about the Output folder being already there.
-  //}
-  //else
-  //{
-  //  printf("Couldn't create the 'Training' folder for the recorder\n");
-  //  returnValue =  1;
-  //}
   printf("\n");
   return returnValue;
 
