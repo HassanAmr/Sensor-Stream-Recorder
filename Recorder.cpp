@@ -95,7 +95,12 @@ int main(int argc, const char * argv[]){
 
   String sessionName = String(buffer);
   
-  String folderName = "~/Workspace/Recorder/Videos/";
+  String folderName = "/Workspace/Recorder/Videos";
+  char *home = getenv ("HOME");
+  
+  String str(home);
+  folderName = str + folderName;
+  
   
   int status = CreateDirectories(folderName, recorderName, sessionName);
 
@@ -154,14 +159,14 @@ int main(int argc, const char * argv[]){
     if (startedRecording)
     {
       //TODO: make the files naming also suitable for windows
-      String vidFileName =      folderName + recorderName + "/" + sessionName + "/" + std::to_string(recordingsCounter) + ".avi";
-      String srtFileName =      folderName + recorderName + "/" + sessionName + "/" + std::to_string(recordingsCounter) + ".srt";
-      String audioFileName =      folderName + recorderName + "/" + sessionName + "/" + std::to_string(recordingsCounter) + ".wav";
+      String vidFileName =      folderName + "/" + recorderName + "/" + sessionName + "/" + std::to_string(recordingsCounter) + ".avi";
+      String srtFileName =      folderName + "/" + recorderName + "/" + sessionName + "/" + std::to_string(recordingsCounter) + ".srt";
+      String audioFileName =      folderName + "/" + recorderName + "/" + sessionName + "/" + std::to_string(recordingsCounter) + ".wav";
       //String trainingFileName = "Output/" + recorderName + "/" + sessionName + "/Training/" + std::to_string(recordingsCounter);//TODO: Delete later
       srtFile = fopen (srtFileName.c_str(),"w");
       //trainingFile = fopen (trainingFileName.c_str()  ,"w");
       WriteWavHeader(audioFileName.c_str(), samplingFrequency, sensorVectorSize);
-      VideoWriter * video = new VideoWriter(vidFileName,CV_FOURCC('M','J','P','G'),fps, Size(frame_width,frame_height),true);  
+      video = new VideoWriter(vidFileName,CV_FOURCC('M','J','P','G'),fps, Size(frame_width,frame_height),true);  
 
       
       startedRecording = false;
@@ -466,11 +471,14 @@ void Help()
 
 int CreateDirectories(String folderName, String recorderName, String sessionName)//TODO: make it also suitable for windows
 {
-  int returnValue = 0;
+  int returnValue = 0; 
+  
+  printf("%s\n", folderName.c_str());
+  
   int status = mkdir(folderName.c_str(), 0777);
   if ( status == 0)
   {
-    printf("Folder created 'Videos' in the following location:\n~/Workspace/Recorder/\n");
+    printf("New folder 'Videos' created in the following location:\n%s\n", folderName.c_str());
   }
   else if (errno == EEXIST)
   {
@@ -482,7 +490,7 @@ int CreateDirectories(String folderName, String recorderName, String sessionName
     returnValue = 1;
   }
 
-  String directoryName = folderName + recorderName;
+  String directoryName = folderName + "/" + recorderName;
 
   status = mkdir(directoryName.c_str(), 0777);
   if ( status == 0)

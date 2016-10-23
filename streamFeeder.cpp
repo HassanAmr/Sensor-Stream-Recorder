@@ -28,7 +28,7 @@ int main(int argc, const char * argv[]){
     	return 1;
   	}
 
-  //usleep(2000000);
+  usleep(5000000);
 	
   while (1)
 	{
