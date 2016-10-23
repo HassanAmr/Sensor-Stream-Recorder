@@ -3,9 +3,12 @@ language: cpp
 compiler:
   - gcc
 
+sudo: required
+
 before_script:
   - mkdir build
   - cd build
+  - cmake --version
   - cmake ..
 
 script: make
