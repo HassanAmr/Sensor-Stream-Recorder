@@ -11,7 +11,7 @@ before_install:
 before_script:
   - mkdir build
   - cd build
-  - export OpenCV_DIR=cmake
+  - export OpenCV_DIR=./cmake
   - cmake --version
   - cmake ..
 
