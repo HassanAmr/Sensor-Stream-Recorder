@@ -13,6 +13,6 @@ before_script:
   - mkdir build
   - cd build
   - cmake --version
-  - cmake ..
+  - cmake -std=c++0x ..
 
 script: make
