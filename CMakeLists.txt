@@ -4,10 +4,14 @@ cmake_minimum_required(VERSION 2.8)
 # Define project name
 project(Sensor-Stream-Recorder)
 
+if(UNIX)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=gnu++0x")
+endif()
+
 # Find OpenCV, you may need to set OpenCV_DIR variable
 # to the absolute path to the directory containing OpenCVConfig.cmake file
 # via the command line or GUI
-find_package(OpenCV REQUIRED)
+find_package( OpenCV )
 
 # If the package has been found, several variables will
 # be set, you can find the full list with descriptions

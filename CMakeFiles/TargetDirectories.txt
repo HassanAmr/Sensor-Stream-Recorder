@@ -1,1 +1,0 @@
-/Users/Hassan/GitHub/Sensor-Stream-Recorder/CMakeFiles/Sensor-Stream-Recorder.dir
