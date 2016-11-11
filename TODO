@@ -1,0 +1,8 @@
+### TODOs
+
+- [ ] Initialize the recorder's arguments using real command-line options.
+- [ ] Add an option to use a scheduled recording plan (e.g. 0s - 20s: no gesture, 20s - 40s: gestureA, 40s - 60s: no gesure, etc..)
+- [ ] maybe add a gif image to explain how the recorder works
+- [ ] Edit the help section to make it more appealing
+- [ ] Replace opencv for something that can create `.mkv`
+- [ ] Make plotting more useful
