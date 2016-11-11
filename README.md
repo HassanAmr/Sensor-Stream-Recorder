@@ -1,8 +1,8 @@
 # Sensor Stream Recorder
 
-The purpose of this recorder is to synchronize sensor stream with an annotated descripton of the current action (gesture name), and save them in a filing structure consisting of a video file, audio file, and a subtilte file (`.srt`). 
+The purpose of this recorder is to synchronize sensor stream with an annotated description of the current action (gesture name), and save them in a filing structure consisting of a video file, audio file, and a subtilte file (`.srt`). 
 
-* Video file which is a `.avi` format file that contains the images from the camera (10fps) of the current scene
+* Video file which is a `.avi` format file that contains the images from the camera (10 fps) of the current scene
 * Audio file which is a `.wav` format file that contains the sensor stream (synchronized with the images) written in little-endian order
 * Subtitile file which is a `.srt` format file that has annotations of the actions (gestures) corresponding to the various times of the recording 
 
