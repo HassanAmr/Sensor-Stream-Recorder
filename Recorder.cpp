@@ -458,14 +458,20 @@ void Help()
 {
     cout << "\nThis program helps you train your sensor data by piping the sensor stream directly into this program.\n\n"
             "Please make sure that the Recorder is active before starting the sensor stream feed, otherwise the feed will not be synchronized.\n\n"
-            "Call:\n"
-            "./Recorder [recorder_name] [expected_#_inputs] [sampling_frequency]\n" << endl;
+            "Usage:\n"
+            "\t./Recorder [recorder_name] [expected_#_inputs] [sampling_frequency]\n" << endl;
             //"./Recorder [recorder_name] [symbol_to_train] [expected_#_inputs_from_sensor]\n" << endl;
 
-    cout << "Hot keys: *Recorder window must be active for these controls to work.*\n"
+    cout << "Control keys (Recorder window must be active for these controls to work):\n"
             "\tESC - quit the program\n"
-            "\tr - start, or stop a recording.\n"
+            "\tr - start, or stop a recording\n"
+            "\tn - get ready for the next item in the list found in the file called `gesture`\n"
+            "\ts - start/end annotating the recording with the current gesture pointed to by using the key `n`\n"
             //"\ts - start stream again, in case the sensor was interrupted.\n"
+            << endl;
+
+    cout << "Example:\n"
+            "\tunbuffer python SerialPort.py | ./Recorder Hassan 9 20"
             << endl;
 }
 

@@ -1,70 +1,42 @@
-# hicat :cat:
+# Sensor Stream Recorder
 
-<img src="http://ricostacruz.com/hicat/hicat.gif">
+The purpose of this recorder is to synchronize sensor stream with an annotated descripton of the current action (gesture name), and save them in a filing structure consisting of a video file, audio file, and a subtilte file (`.srt`). 
 
-`cat` with syntax highlighting. The language is auto-detected through the file 
-extension.
+* Video file which is a `.avi` format file that contains the images from the camera (10fps) of the current scene
+* Audio file which is a `.wav` format file that contains the sensor stream (synchronized with the images) written in little-endian order
+* Subtitile file which is a `.srt` format file that has annotations of the actions (gestures) corresponding to the various times of the recording 
 
-    hicat index.js
-
-Pipe something to `hicat`. The language will be inferred from the contents.
-
-    curl http://site.com | hicat
-
-If hicat fails to detect a language, specify it using `-l LANG`.
-
-    curl http://site.com | hicat -l xml
-
-[![Status](https://travis-ci.org/rstacruz/hicat.svg?branch=master)](https://travis-ci.org/rstacruz/hicat)  
+[![Status](https://travis-ci.org/HassanAmr/Sensor-Stream-Recorder.svg?branch=master)](https://travis-ci.org/HassanAmr/Sensor-Stream-Recorder)  
 
 Installation
 ------------
+    
+    $ cmake .
+    $ make
 
-    $ npm install -g hicat
-
-[![npm version](https://badge.fury.io/js/hicat.svg)](https://npmjs.org/package/hicat "View this project on npm")
+In case you want the recorder with the plotter, you will need to modify the file called `CMakeLists.txt` to use `Recorder_w_Plot.cpp`
 
 Usage:
+  
+    $ ./Recorder
 
-    $ hicat --help
+      This program helps you train your sensor data by piping the sensor stream directly into this program
 
+      Please make sure that the Recorder is active before starting the sensor stream feed, otherwise the feed will not be synchronized.
+      
       Usage:
-          hicat [options] FILE
-          ... | hicat [options]
+          ./Recorder [recorder_name] [expected_#_inputs] [sampling_frequency]
 
-      Options:
-          -h, --help         print usage information
-          -v, --version      show version info and exit
-          -l, --lang LANG    use a given language
-              --languages    list available languages
-              --no-pager     disable the pager
+      Control keys (Recorder window must be active for these controls to work):
+          ESC - quit the program
+          r - start, or stop a recording
+          n - get ready for the next item in the list found in the file called `gesture`
+          s - start/end annotating the recording with the current gesture pointed to by using the key `n`
 
-Tips and tricks
----------------
+      Example:
+          unbuffer python SerialPort.py | ./Recorder Hassan 9 20
+ 
 
-Add an alias to your `~/.bashrc` to save a few keystrokes.
+Please note:
+  In case the stream was interrupted during the recording session, please restart the recorder along with the stream as explained above.
 
-    alias hi=hicat
-
-Btw
----
-
-[highlight.js] powers the syntax highlighter engine.
-
-Thanks
-------
-
-**hicat** © 2014+, Rico Sta. Cruz. Released under the [MIT License].<br>
-Authored and maintained by Rico Sta. Cruz with help from [contributors].
-
-> [ricostacruz.com](http://ricostacruz.com) &nbsp;&middot;&nbsp;
-> GitHub [@rstacruz](https://github.com/rstacruz) &nbsp;&middot;&nbsp;
-> Twitter [@rstacruz](https://twitter.com/rstacruz)
-
-[MIT License]: http://mit-license.org/
-[contributors]: http://github.com/rstacruz/hicat/contributors
-[highlight.js]: http://highlightjs.org
-
-Run:
-unbuffer python SerialPort.py | ./Recorder Hassan 9 20
-unbuffer python2 SerialPort.py | ./Recorder Hassan 9 20
